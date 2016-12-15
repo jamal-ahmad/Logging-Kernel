@@ -895,10 +895,10 @@ out:
 
 void get_ip(u32 ip, unsigned char *bytes)
 {
-    bytes[3] = ip & 0xFF;
-    bytes[2] = (ip >> 8) & 0xFF;
-    bytes[1] = (ip >> 16) & 0xFF;
-    bytes[0] = (ip >> 24) & 0xFF;
+    bytes[0] = ip & 0xFF;
+    bytes[1] = (ip >> 8) & 0xFF;
+    bytes[2] = (ip >> 16) & 0xFF;
+    bytes[3] = (ip >> 24) & 0xFF;
     //printf("%d.%d.%d.%d\n", bytes[3], bytes[2], bytes[1], bytes[0]);
 }
 
@@ -985,7 +985,7 @@ static int tcp_transmit_skb(struct sock *sk, struct sk_buff *skb, int clone_it,
 
 	struct iphdr *iph;          // IPv4 header
 	unsigned int saddr, daddr, zsaddr, zdaddr;           // Source and destination addresses
-	u16 zdport;
+	//u16 zdport;
 	//iph = ip_hdr(skb);          // get IP header
 	iph = (struct iphdr *)skb_network_header(skb);
 	saddr = (unsigned int)iph->saddr;
@@ -1009,7 +1009,7 @@ static int tcp_transmit_skb(struct sock *sk, struct sk_buff *skb, int clone_it,
 	zsaddr = sk->sk_rcv_saddr;
 	//zdport = sk->sk_dport;
 
-	printk(KERN_ERR "jamal_log:\tsrc_IP\t%d\tdest_IP\t%d\tsrc_p\t%d\tdest_p\t%d\tmax_wnd\t%d\tsnd_cwnd\t%d\trcv_wnd\t%d\n", saddr,  daddr, th->source, th->dest, tp->max_window, tp->snd_cwnd, tp->rcv_wnd );
+	printk(KERN_ERR "jamal_log:\tsrc_IP\t%pI4\tdest_IP\t%pI4\tsrc_p\t%d\tdest_p\t%d\tmax_wnd\t%d\tsnd_cwnd\t%d\trcv_wnd\t%d\n", &(sk->sk_daddr), &(sk->sk_rcv_saddr), th->source, th->dest, tp->max_window, tp->snd_cwnd, tp->rcv_wnd );
         //printk(KERN_ERR "jamal_log:\tsrc_p\t%x\tdest_p\t%x\tmax_wnd\t%x\tsnd_cwnd\t%x\trcv_wnd\t%x\n", th->source, th->dest, tp->max_window, tp->snd_cwnd, tp->rcv_wnd );
 
 	if (unlikely(tcb->tcp_flags & TCPHDR_SYN)) {
