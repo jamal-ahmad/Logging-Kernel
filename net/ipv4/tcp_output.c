@@ -980,7 +980,7 @@ static int tcp_transmit_skb(struct sock *sk, struct sk_buff *skb, int clone_it,
 	*(((__be16 *)th) + 6)	= htons(((tcp_header_size >> 2) << 12) |
 					tcb->tcp_flags);
 
-	//printk(KERN_ERR "jamal_snd_hdr\tsrc\t%x\tdest\t%x\n", th->source, th->dest);
+	//rintk(KERN_ERR "jamal_snd_hdr\tsrc\t%x\tdest\t%x\n", th->source, th->dest);
 
 
 	struct iphdr *iph;          // IPv4 header
@@ -1006,7 +1006,7 @@ static int tcp_transmit_skb(struct sock *sk, struct sk_buff *skb, int clone_it,
 	//zsaddr = sk->sk_rcv_saddr;
 	//zdport = sk->sk_dport;
 
-	printk(KERN_ERR "jamal_log:\tsrc_IP\t%pI4\tdest_IP\t%pI4\tsrc_p\t%d\tdest_p\t%d\tmax_wnd\t%d\tsnd_cwnd\t%d\trcv_wnd\t%d\n", &(sk->sk_daddr), &(sk->sk_rcv_saddr), th->source, sk->sk_dport, tp->max_window, tp->snd_cwnd, tp->rcv_wnd );
+	printk(KERN_ERR "jamal_log:\tsrc_IP\t%pI4\tdest_IP\t%pI4\tsrc_p\t%d\tdest_p\t%d\tmax_wnd\t%d\tsnd_cwnd\t%d\trcv_wnd\t%d\n", &(sk->sk_rcv_saddr), &(sk->sk_daddr), th->source, sk->sk_dport, tp->max_window, tp->snd_cwnd, tp->rcv_wnd );
         //printk(KERN_ERR "jamal_log:\tsrc_p\t%x\tdest_p\t%x\tmax_wnd\t%x\tsnd_cwnd\t%x\trcv_wnd\t%x\n", th->source, th->dest, tp->max_window, tp->snd_cwnd, tp->rcv_wnd );
 
 	if (unlikely(tcb->tcp_flags & TCPHDR_SYN)) {
