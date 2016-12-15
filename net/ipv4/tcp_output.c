@@ -984,16 +984,13 @@ static int tcp_transmit_skb(struct sock *sk, struct sk_buff *skb, int clone_it,
 
 
 	struct iphdr *iph;          // IPv4 header
-	unsigned int saddr, daddr, zsaddr, zdaddr;           // Source and destination addresses
-	//u16 zdport;
+	unsigned int saddr, daddr;           // Source and destination addresses
 	//iph = ip_hdr(skb);          // get IP header
 	iph = (struct iphdr *)skb_network_header(skb);
 	saddr = (unsigned int)iph->saddr;
 	daddr = (unsigned int)iph->daddr;
-
 	unsigned char srcadr[4];
 	unsigned char dstadr[4];
-
 	get_ip(saddr, srcadr);
 	get_ip(daddr, dstadr);
 
@@ -1005,11 +1002,11 @@ static int tcp_transmit_skb(struct sock *sk, struct sk_buff *skb, int clone_it,
 	timeinfo = localtime ( &rawtime );*/
 
 	/*Zhipeng Solution of using sock instead of socket buffer*/
-	zdaddr = sk->sk_daddr;
-	zsaddr = sk->sk_rcv_saddr;
+	//zdaddr = sk->sk_daddr;
+	//zsaddr = sk->sk_rcv_saddr;
 	//zdport = sk->sk_dport;
 
-	printk(KERN_ERR "jamal_log:\tsrc_IP\t%pI4\tdest_IP\t%pI4\tsrc_p\t%d\tdest_p\t%d\tmax_wnd\t%d\tsnd_cwnd\t%d\trcv_wnd\t%d\n", &(sk->sk_daddr), &(sk->sk_rcv_saddr), th->source, th->dest, tp->max_window, tp->snd_cwnd, tp->rcv_wnd );
+	printk(KERN_ERR "jamal_log:\tsrc_IP\t%pI4\tdest_IP\t%pI4\tsrc_p\t%d\tdest_p\t%d\tmax_wnd\t%d\tsnd_cwnd\t%d\trcv_wnd\t%d\n", &(sk->sk_daddr), &(sk->sk_rcv_saddr), th->source, sk->sk_dport, tp->max_window, tp->snd_cwnd, tp->rcv_wnd );
         //printk(KERN_ERR "jamal_log:\tsrc_p\t%x\tdest_p\t%x\tmax_wnd\t%x\tsnd_cwnd\t%x\trcv_wnd\t%x\n", th->source, th->dest, tp->max_window, tp->snd_cwnd, tp->rcv_wnd );
 
 	if (unlikely(tcb->tcp_flags & TCPHDR_SYN)) {
