@@ -1,3 +1,8 @@
+        This is the raspbian modded to log TCP parameters to dmesg using the /dev/kmesg buffer
+        Outputts are \t separated i.e. Tab separated values
+        to get values do:
+        dmesg | grep -i jamal > somefile.txt 
+        
         Linux kernel release 4.x <http://kernel.org/>
 
 These are the release notes for Linux version 4.  Read them carefully,
