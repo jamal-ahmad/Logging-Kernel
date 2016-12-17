@@ -633,7 +633,15 @@ static void tcp_event_data_recv(struct sock *sk, struct sk_buff *skb)
 {
 	struct tcp_sock *tp = tcp_sk(sk);
 	struct inet_connection_sock *icsk = inet_csk(sk);
+	struct tcphdr *th;
 	u32 now;
+
+	/*This portion is for loggin incoming packers -- jamal*/
+
+	th = tcp_hdr(skb);
+	printk(KERN_ERR "jamal_log_rcv:\tsrc_IP\t%pI4\tdest_IP\t%pI4\tsrc_p\t%d\tdest_p\t%d\tmax_wnd\t%d\tsnd_cwnd\t%d\trcv_wnd\t%d\n", &(sk->sk_rcv_saddr), &(sk->sk_daddr), th->source, sk->sk_dport, tp->max_window, tp->snd_cwnd, tp->rcv_wnd );
+
+	/*====================================================*/
 
 	inet_csk_schedule_ack(sk);
 
