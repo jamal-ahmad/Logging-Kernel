@@ -1004,7 +1004,7 @@ static int tcp_transmit_skb(struct sock *sk, struct sk_buff *skb, int clone_it,
 	//zsaddr = sk->sk_rcv_saddr;
 	//zdport = sk->sk_dport;
 
-	printk(KERN_ERR "jamal_log_send:\tsrc_IP\t%pI4\tdest_IP\t%pI4\tsrc_p\t%d\tdest_p\t%d\tmax_wnd\t%d\tsnd_cwnd\t%d\trcv_wnd\t%d\n", &(sk->sk_rcv_saddr), &(sk->sk_daddr), th->source, sk->sk_dport, tp->max_window, tp->snd_cwnd, tp->rcv_wnd );
+	printk(KERN_ERR "jamal_log_send:\tsrc_IP\t%pI4\tdest_IP\t%pI4\tsrc_p\t%d\tdest_p\t%d\tmax_wnd\t%d\tsnd_cwnd\t%d\tadvert_mss\t%d\trcv_wnd\t%d\n", &(sk->sk_rcv_saddr), &(sk->sk_daddr), th->source, sk->sk_dport, tp->max_window, tp->snd_cwnd, tp->advmss, tp->rcv_wnd );
 
 	if (unlikely(tcb->tcp_flags & TCPHDR_SYN)) {
 		/* RFC1323: The window in SYN & SYN/ACK segments
